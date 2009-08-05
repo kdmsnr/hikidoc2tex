@@ -199,7 +199,7 @@ class HikiDoc
     end
 
     def paragraph(lines)
-      @f.puts "#{lines.join("\n")}"
+      @f.puts "#{lines.join("\n")}\\\\"
     end
 
     def block_plugin(str)
