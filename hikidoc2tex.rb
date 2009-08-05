@@ -21,6 +21,10 @@ class HikiDoc
 \usepackage{ascmac}
 %\usepackage{times,latexsym,mathptm}
 \usepackage{alltt}
+\usepackage{framed,color}
+\definecolor{shadecolor}{gray}{0.90}
+\usepackage{ascmac}
+
 
 %\numberwithin{equation}{section}
 %\topmargin = 0mm
@@ -172,11 +176,13 @@ class HikiDoc
     private :tdattr
 
     def blockquote_open
-      @f.print '\begin{quotation}'
+      @f.puts '\begin{shadebox}'
+      @f.puts '\begin{quote}'
     end
 
     def blockquote_close
-      @f.puts '\end{quotation}'
+      @f.puts '\end{quote}'
+      @f.puts '\end{shadebox}'
     end
 
     def block_preformatted(str, info)
@@ -193,9 +199,11 @@ class HikiDoc
     end
 
     def preformatted(str)
+      @f.print '\begin{screen}'
       @f.print '\begin{verbatim}'
       @f.print str
       @f.puts '\end{verbatim}'
+      @f.print '\end{screen}'
     end
 
     def paragraph(lines)
