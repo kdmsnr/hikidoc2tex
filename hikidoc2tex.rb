@@ -211,7 +211,7 @@ class HikiDoc
     #
 
     def hyperlink(uri, title)
-      %Q(#{title} - #{escape_html_param(uri)})
+      %Q(#{title} - #{uri})
     end
 
     def wiki_name(name)
