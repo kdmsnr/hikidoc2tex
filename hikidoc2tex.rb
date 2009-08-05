@@ -24,7 +24,26 @@ class HikiDoc
 \usepackage{framed,color}
 \definecolor{shadecolor}{gray}{0.90}
 \usepackage{ascmac}
-
+\usepackage{listings}
+\lstset{%
+ language={C},
+ basicstyle={\small},%
+ identifierstyle={\small},%
+ commentstyle={\small\itshape},%
+ keywordstyle={\small\bfseries},%
+ ndkeywordstyle={\small},%
+ stringstyle={\small\ttfamily},
+ frame={tb},
+ breaklines=true,
+ columns=[l]{fullflexible},%
+ numbers=left,%
+ xrightmargin=0zw,%
+ xleftmargin=3zw,%
+ numberstyle={\scriptsize},%
+ stepnumber=1,
+ numbersep=1zw,%
+ lineskip=-0.5ex%
+}
 
 %\numberwithin{equation}{section}
 %\topmargin = 0mm
@@ -185,17 +204,21 @@ class HikiDoc
       @f.puts '\end{shadebox}'
     end
 
-    def block_preformatted(str, info)
-      syntax = info ? info.downcase : nil
+    def block_preformatted(str, syntax)
       if syntax
         begin
-          convertor = Syntax::Convertors::HTML.for_syntax(syntax)
-          @f.puts convertor.convert(str)
+          source_code(str, syntax)
           return
         rescue NameError, RuntimeError
         end
       end
-      preformatted(text(str))
+      preformatted(str)
+    end
+
+    def source_code(str, lang)
+      @f.puts "\\begin{lstlisting}[language=#{lang}]"
+      @f.print str
+      @f.print '\end{lstlisting}'
     end
 
     def preformatted(str)
