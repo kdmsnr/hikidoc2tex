@@ -215,8 +215,8 @@ class HikiDoc
       preformatted(str)
     end
 
-    def source_code(str, lang)
-      @f.puts "\\begin{lstlisting}[language=#{lang}]"
+    def source_code(str, syntax)
+      @f.puts "\\begin{lstlisting}[language=#{syntax}]"
       @f.print str
       @f.print '\end{lstlisting}'
     end
